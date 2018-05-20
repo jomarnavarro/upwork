@@ -2,6 +2,7 @@ require_relative './page_object'
 # Takes care of google search steps and validations
 class UWResultsPage < PageObject
   FREELANCERS_TYPE = 'freelancers'.freeze
+  SALARY_RANGE = '-'.freeze
   # object repository section
   define :result_tiles, xpath: '//article'
   define :candidate_name_lbl, xpath: './/*[@data-qa="tile_name"]'
@@ -28,11 +29,16 @@ class UWResultsPage < PageObject
     candidates ||= []
     candidate_results = select_elements(:result_tiles)
     candidate_results.each do |candidate_elem|
-      candidates.push(candidate_info(candidate_elem))
+      candidates.push(candidate_info(candidate_elem)) \
+        unless company?(candidate_elem)
     end
     fail('No data found.') if candidates.empty?
     end_section
     candidates
+  end
+
+  def company?(candidate)
+    info(candidate, :hourly_rate_lbl).include?(SALARY_RANGE)
   end
 
   def validate_keyword_on_candidates(candidates, keyword)
