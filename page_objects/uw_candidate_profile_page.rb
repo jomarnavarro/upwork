@@ -20,30 +20,40 @@ class UWCandidateProfilePage < PageObject
     info
   end
 
-  def validate_candidate_data(candidate_profile_info, candidate_search_info)
+  def validate_candidate_data(profile_info, search_info)
     validation_result = [
-      validate_string(candidate_profile_info, candidate_search_info,:name),
-      validate_string(candidate_profile_info, candidate_search_info,:title),
-      validate_string(candidate_profile_info, candidate_search_info,:hourly_rate),
-      validate_string(candidate_profile_info, candidate_search_info,:earnings),
-      validate_string(candidate_profile_info, candidate_search_info,:has_badge),
-      validate_string(candidate_profile_info, candidate_search_info,:location),
-      validate_empty(candidate_profile_info, candidate_search_info,:skill_list)
+      validate_string(profile_info, search_info,:name),
+      validate_string(profile_info, search_info,:title),
+      validate_string(profile_info, search_info,:hourly_rate),
+      validate_string(profile_info, search_info,:earnings),
+      validate_string(profile_info, search_info,:has_badge),
+      validate_string(profile_info, search_info,:location),
+      validate_description(profile_info, search_info, :description),
+      validate_empty(profile_info, search_info,:skill_list)
     ].all?
     raise('Validation failed.') unless validation_result
     puts 'Random profile validation passed.' if validation_result
     end_section
   end
 
-  def validate_string(candidate_profile_info, candidate_search_info, field)
-    validation = candidate_profile_info[field] == candidate_search_info[field]
+  def validate_description(profile_info, search_info, field)
+    stripped_prof_info = profile_info[field].downcase.delete('^a-z')
+    stripped_search_info = search_info[field].downcase.delete('^a-z')
+    validation = stripped_prof_info.include?(stripped_search_info)
     puts "#{field} validation passed " if validation
     puts "#{field} validation failed " unless validation
     validation
   end
 
-  def validate_empty(candidate_profile_info, candidate_search_info, field)
-    validation = (candidate_search_info[field] - candidate_profile_info[field]).empty?
+  def validate_string(profile_info, search_info, field)
+    validation = profile_info[field] == search_info[field]
+    puts "#{field} validation passed " if validation
+    puts "#{field} validation failed " unless validation
+    validation
+  end
+
+  def validate_empty(profile_info, search_info, field)
+    validation = (search_info[field] - profile_info[field]).empty?
     puts "#{field} validation passed " if validation
     puts "#{field} validation failed " unless validation
     validation
