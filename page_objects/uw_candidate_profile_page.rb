@@ -27,6 +27,7 @@ class UWCandidateProfilePage < PageObject
       validate_string(profile_info, search_info,:hourly_rate),
       validate_string(profile_info, search_info,:earnings),
       validate_string(profile_info, search_info,:has_badge),
+      validate_string(profile_info, search_info,:success_rate),
       validate_string(profile_info, search_info,:location),
       validate_description(profile_info, search_info, :description),
       validate_empty(profile_info, search_info,:skill_list)

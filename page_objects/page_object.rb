@@ -51,10 +51,15 @@ class PageObject
   end
 
   def success_rate(elem, lbl)
-    raw_success_rate = info(elem, lbl)
-    return raw_success_rate.split.first unless raw_success_rate.empty?
-    success_rate = raw_success_rate.empty? ? '' : raw_success_rate.split.first
+    raw_success_rate = info_success_rate(elem, lbl) #info(elem, lbl)
+    return raw_success_rate.first.split.first unless raw_success_rate.empty?
+    success_rate = raw_success_rate.empty? ? '' : raw_success_rate.first.split.first
     success_rate
+  end
+
+  def info_success_rate(elem, lbl)
+    succ_rate_elems = select_children(elem, lbl)
+    succ_rate_elems.map(&:text).uniq - ['']
   end
 
   def description(elem, lbl)
