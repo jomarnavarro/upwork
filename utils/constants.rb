@@ -1,3 +1,6 @@
+##
+# Contains data configuration for the test case.  I'd've used a yaml file, but no other
+# gems were allowed.
 @config = {
   url: {
     upwork: 'http://upwork.com'

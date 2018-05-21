@@ -2,7 +2,7 @@ Dir["./page_objects/*.rb"].each { |file| require file}
 Dir["./utils/*.rb"].each { |file| require file}
 require 'selenium-webdriver'
 
-before("Test 1")
+before("Upwork Freelancer Search and profile verification test.")
 ensure_page(UWHomePage)
 @page.search(@config[:keyword], @config[:search_type])
 ensure_page(UWResultsPage)

@@ -1,6 +1,9 @@
 require 'timeout'
-
-# Methods required to interact with webelements
+##
+# Methods required to interact with webelements, these are self documented ;P
+# They are part of a library I've used in other ruby-selenium implementations
+# and can be found in other repos  of mine, such as https://github.com/jomarnavarro/ruby-poc.
+# I added a few methods, such as +select_child+, +select_children+, and +submit+.
 module ObjectLibs
   # returns the reference to the web element by name or descriptor hash
   def select(descriptor)
